@@ -1,9 +1,8 @@
-const Resolvers = {
-    Query:{
-        hello: ()=>{
-            return {msg:"hello world"}
-        }
-    }
+
+function helloquery() {
+    return {msg:"hello world"}
 }
 
-module.exports = Resolvers;
+module.exports = {
+    helloquery
+}
