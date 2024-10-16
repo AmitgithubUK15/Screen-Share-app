@@ -4,7 +4,6 @@ const cors = require('cors');
 
 
 // Start apollo server
-
 Startserver();
 
 app.use(cors('http://localhost:5173'));
