@@ -1,8 +1,9 @@
-var express = require("express");
+const { app ,server} = require("./socket/socket.client");
+const cors = require('cors');
 
-var app = express();
 
+app.use(cors('http://localhost:5173'));
 
-app.listen(8000,()=>{
-    console.log("Server is running at port 8000");
+server.listen(8080,()=>{
+    console.log("server is started");
 })
