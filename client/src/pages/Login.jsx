@@ -1,5 +1,6 @@
 import React from 'react'
-import { FaGoogle, FaFacebook } from 'react-icons/fa';
+import { FaGoogle} from 'react-icons/fa';
+
 
 export default function Login() {
   return (
@@ -25,14 +26,14 @@ export default function Login() {
                         {/* email */}
                         <div>
                           <label className='text-sm font-semibold'>Email </label> <br />
-                          <input type="text" className='outline-none  border-b border-black  w-full py-3 px-1'
+                          <input type="text" className='outline-none text-md border-b border-black  w-full py-2 px-1'
                           name="" id=""  placeholder='Enter Your Email...'/>
                         </div>
                          
                          {/* password */}
                         <div>
                         <label className='text-sm font-semibold'>Password</label> <br />
-                          <input type="text" className='outline-none border-b border-black  w-full py-3 px-1'
+                          <input type="password" className='outline-none text-md border-b border-black  w-full py-2 px-1'
                           name="" id=""  placeholder='Enter Your Password...'/>
                         </div>
 
