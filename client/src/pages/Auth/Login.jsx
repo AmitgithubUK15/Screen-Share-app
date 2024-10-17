@@ -27,14 +27,14 @@ export default function Login() {
                         <div>
                           <label className='text-sm font-semibold'>Email </label> <br />
                           <input type="text" className='outline-none text-md border-b border-black  w-full py-2 px-1'
-                          name="" id=""  placeholder='Enter Your Email...'/>
+                          name="" id=""  placeholder='Enter Your Email...' required />
                         </div>
                          
                          {/* password */}
                         <div>
                         <label className='text-sm font-semibold'>Password</label> <br />
                           <input type="password" className='outline-none text-md border-b border-black  w-full py-2 px-1'
-                          name="" id=""  placeholder='Enter Your Password...'/>
+                          name="" id=""  placeholder='Enter Your Password...' required />
                         </div>
 
                         {/* Login button */}

@@ -1,5 +1,5 @@
 const { helloquery } = require("./Query/normal/Normalquery");
-const {createuser} = require("./Mutation/Auth/Auth.mutation")
+const {createuser, resolve_createpassword} = require("./Mutation/Auth/Auth.mutation")
 
 const Resolvers = {
     Query:{
@@ -7,7 +7,8 @@ const Resolvers = {
     },
 
     Mutation:{
-        SignupUser: createuser
+        SignupUser: createuser,
+        createpassword: resolve_createpassword
     }
 }
 

@@ -21,10 +21,10 @@ async function GoogleAuth(args){
 
     if(!process) return {msg:"Not created"};    
 
-    return {msg:"Login success"};  
+    return {msg:"Login success",email:user.email};  
     }
     else{
-      return {msg:"Already Login success"}
+      return {msg:"Already Login success",email:ExistedUser.email}
     }
     
   } catch (error) {
@@ -32,6 +32,25 @@ async function GoogleAuth(args){
   }
 }
 
+async function controll_createpassword(args){
+  try {
+    const hashedpassword = await bcrypt.hash(args.password,8);
+
+    const finduser = await User.findOneAndUpdate(
+      {email:args.email},
+      {$set:{password:hashedpassword}},
+      {new :true}
+    );
+    
+    if(!finduser) return {msg:"Failed to create password"};
+
+    return {msg:"Password create successfully"}
+
+  } catch (error) {
+    console.log(error);
+  }
+}
 module.exports = {
     GoogleAuth,
+    controll_createpassword
 }

@@ -16,13 +16,12 @@ export default function OAuth() {
 
       const result = await signInWithPopup(auth,provider);
       
-      console.log(result);
+    
 
       let {data} =  await SignupUser({variables:{name:result.user.displayName,email:result.user.email,profile:result.user.photoURL}});
 
       if(data){
-        console.log(data);
-        navigate("/createpassword")
+        navigate(`/createpassword/${data.SignupUser.email}`)
       }
     } catch (error) {
       console.log(error);

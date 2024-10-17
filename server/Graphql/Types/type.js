@@ -9,13 +9,16 @@ const typeDefs = `#graphql
    
    type response{
    msg:String!
+   email:String
    }
+
    type Query{
    hello: response!
    }
 
    type Mutation {
    SignupUser(name:String!, email:String!, profile:String!) : response!
+   createpassword(email:String!,password:String!) : response!
    }
 `;
 
