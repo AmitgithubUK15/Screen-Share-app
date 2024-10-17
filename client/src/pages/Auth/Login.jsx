@@ -1,5 +1,5 @@
-import React from 'react'
-import { FaGoogle} from 'react-icons/fa';
+
+import OAuth from '../../components/Auth/OAuth';
 
 
 export default function Login() {
@@ -56,9 +56,7 @@ export default function Login() {
                     </div>
 
                     <div className='flex justify-center'>
-                    <button>
-                      <FaGoogle style={{ marginRight: "8px" }} className=' w-6 h-6 hover:text-red-800'/>
-                    </button>
+                     <OAuth />
                     </div>
                   </div>
                 </div>
