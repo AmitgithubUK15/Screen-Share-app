@@ -1,8 +1,36 @@
 
+import { useMutation } from '@apollo/client';
 import OAuth from '../../components/Auth/OAuth';
+import { Login_Type } from '../../Graphql/Mutation/Auth/Auth.mutation';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Login() {
+  const [loginUser] = useMutation(Login_Type);
+  const [emailval,setEmailval] = useState("");
+  const [passval,setPassVal] = useState("");
+  // const [error,setError] = useState();
+  const navigate = useNavigate();
+  const [logining,setLogining] = useState(false);
+
+  async function handlesubmit(e) {
+    e.preventDefault();
+    setLogining(true);
+    try {
+      let {data} = await loginUser({variables:{email:emailval,password:passval}});
+      
+      if(data){
+        // console.log(data);
+        alert(data.loginUser.msg);
+        setLogining(false);
+        navigate('/');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className='w-full h-full'>
        <div className='w-full h-full  flex justify-center items-center'>
@@ -22,31 +50,38 @@ export default function Login() {
                {/* login form */}
                <div>
                     <div>
-                      <form action="" className='flex flex-col gap-5'>
+                      <form onSubmit={handlesubmit} className='flex flex-col gap-5'>
                         {/* email */}
                         <div>
                           <label className='text-sm font-semibold'>Email </label> <br />
                           <input type="text" className='outline-none text-md border-b border-black  w-full py-2 px-1'
-                          name="" id=""  placeholder='Enter Your Email...' required />
+                           placeholder='Enter Your Email...' required 
+                           value={emailval} onChange={(e)=>setEmailval(e.target.value)}/>
                         </div>
                          
                          {/* password */}
                         <div>
                         <label className='text-sm font-semibold'>Password</label> <br />
                           <input type="password" className='outline-none text-md border-b border-black  w-full py-2 px-1'
-                          name="" id=""  placeholder='Enter Your Password...' required />
+                          name="" id=""  placeholder='Enter Your Password...' required 
+                          value={passval} onChange={(e)=>setPassVal(e.target.value)}/>
                         </div>
 
                         {/* Login button */}
                         <div className=' rounded-md overflow-hidden'>
                           <div className='w-full bg-black'>
-                          <button className='border w-full text-white p-3 text-lg font-semibold'>Login</button>
+                          <button type='submit' className='border w-full text-white p-3 text-md font-semibold'>{logining ? "Logining..." : "Login"}</button>
                           </div>
                         </div>
                       </form>
                     </div>
                </div>
-
+               
+               {/* error */}
+               <div>
+                
+               </div>
+               
                {/* login with google and facebook */}
 
                <div >
