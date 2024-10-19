@@ -8,7 +8,7 @@ const typeDefs = `#graphql
    }
    
    type response{
-   msg:String!
+   msg:String
    email:String
    }
 
@@ -17,9 +17,9 @@ const typeDefs = `#graphql
    }
 
    type Mutation {
-   SignupUser(name:String!, email:String!, profile:String!) : response!
-   createpassword(email:String!,password:String!) : response!
-   loginUser(email:String! , password:String!) : response!
+   SignupUser(name:String!, email:String!, profile:String!) : response
+   createpassword(email:String!,password:String!) : response
+   loginUser(email:String! , password:String!) : response
    }
 `;
 

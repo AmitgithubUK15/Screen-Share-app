@@ -3,6 +3,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { setUser } = require("../../../../utils/VerifyUser");
 const { RestrictLoggedUser } = require("../../../../Middleware/CheckAuth");
+const { InternalServerError, UnauthorizedError, NotFoundError } = require("../../../../error/error");
+
+
 
 async function createuser(parent,args,{req,res}){
     try {
@@ -22,7 +25,7 @@ async function createuser(parent,args,{req,res}){
     
         const process = await user.save();
     
-        if(!process) return {msg:"Not created"}; 
+        if(!process) throw new InternalServerError("User not created Internal server error");
         
         let token = setUser(ExistedUser);
 
@@ -54,17 +57,18 @@ async function createuser(parent,args,{req,res}){
         }
         
       } catch (error) {
-        console.log(error);
+        throw new InternalServerError(error.message || 'Internal Server Error');
       }
 }
+
 
 async function resolve_createpassword(parent,args,{req,res}){
     try {
         let auth = await RestrictLoggedUser({req,res});
         
-        console.log(auth);
+      
         if(auth === false){
-          return {msg:"Please login again"};
+            throw new UnauthorizedError("Please login again");
         }
         else{
           const hashedpassword = await bcrypt.hash(args.password,8);
@@ -81,7 +85,7 @@ async function resolve_createpassword(parent,args,{req,res}){
         }
     
       } catch (error) {
-        console.log(error);
+        throw new UnauthorizedError(error.message || 'Unauthorized');
       }
 
 }
@@ -89,12 +93,12 @@ async function resolve_createpassword(parent,args,{req,res}){
 async function resolve_login(_,args,{req,res}) {
   try {
     let finduser = await User.findOne({email:args.email});
-
-    if(!finduser) return {msg:"Invalid email Id"};
+   
+    if(!finduser) throw new  NotFoundError("User not found");
 
     let checkpassword = await bcrypt.compare(args.password,finduser.password);
 
-    if(!checkpassword) return {msg: "Wrong password"};
+    if(!checkpassword) throw new  NotFoundError("Wrong password");
      
      let token = jwt.sign({id:finduser._id},process.env.SECRETKEY,{expiresIn:'1h'})
 
@@ -110,7 +114,7 @@ async function resolve_login(_,args,{req,res}) {
 
     return {msg:"Login success",email:finduser.email};
   } catch (error) {
-    console.log(error);
+    throw new  NotFoundError(error.message || 'Not Found');
   }
 }
 

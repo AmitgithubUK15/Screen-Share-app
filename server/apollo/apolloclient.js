@@ -7,6 +7,7 @@ const {Resolvers} = require("../Graphql/Resolvers/resolver")
 const cors = require('cors');
 const cookieparser = require("cookie-parser")
 
+
 async function  Startserver() {
     const server = new ApolloServer({
         typeDefs:typeDefs,
@@ -14,6 +15,18 @@ async function  Startserver() {
         context: async ({ req, res }) => {
             return { req, res };
           },
+          formatError:  (err) => {
+            // console.error("costum err",err); // Log the error
+            return {
+                message: err.message,
+                locations: err.locations,
+                path: err.path,
+                extensions: {
+                    code: err.extensions && err.extensions.code || 500,
+                },
+            };
+        }
+        
     });
     await server.start();
     
