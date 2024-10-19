@@ -5,10 +5,17 @@ import './index.css'
 import { ApolloProvider } from '@apollo/client'
 import client from './Apolloclient/Apolloclient.js'
 
+import {Provider} from 'react-redux'
+import {store,persistor} from "./store/store.js"
+import {PersistGate} from 'redux-persist/integration/react'
 
 createRoot(document.getElementById('root')).render(
-    <ApolloProvider client={client}>
+   <Provider store={store}>
+     <PersistGate persistor={persistor}>
+     <ApolloProvider client={client}>
       <App />
-    </ApolloProvider>
+     </ApolloProvider>
+     </PersistGate>
+   </Provider>
  
 )   

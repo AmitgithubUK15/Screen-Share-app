@@ -21,7 +21,10 @@ export const Login_Type = gql`
 mutation Mutation($email:String!, $password:String!){
 loginUser(email:$email , password:$password){
 msg,
+user{
+_id,
 email
+}
 }
 }
 `

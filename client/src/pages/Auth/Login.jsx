@@ -4,15 +4,18 @@ import OAuth from '../../components/Auth/OAuth';
 import { Login_Type } from '../../Graphql/Mutation/Auth/Auth.mutation';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {useDispatch} from 'react-redux'
+import { loginsuccess } from '../../store/User/UserSlice';
 
 
 export default function Login() {
   const [loginUser] = useMutation(Login_Type);
   const [emailval,setEmailval] = useState("");
   const [passval,setPassVal] = useState("");
-  // const [error,setError] = useState();
+  const [error,setError] = useState();
   const navigate = useNavigate();
   const [logining,setLogining] = useState(false);
+  const dispatch = useDispatch()
 
   async function handlesubmit(e) {
     e.preventDefault();
@@ -21,13 +24,14 @@ export default function Login() {
       let {data} = await loginUser({variables:{email:emailval,password:passval}});
       
       if(data){
-        // console.log(data);
+        dispatch(loginsuccess(data.loginUser.user._id))
         alert(data.loginUser.msg);
         setLogining(false);
         navigate('/');
       }
     } catch (error) {
-      console.log(error);
+      setLogining(false);
+      setError(error.message);
     }
   }
 
@@ -78,8 +82,8 @@ export default function Login() {
                </div>
                
                {/* error */}
-               <div>
-                
+               <div className='h-6'>
+                 <p className='py-1 text-center text-red-500 font-semibold text-sm'>{error}</p>
                </div>
                
                {/* login with google and facebook */}

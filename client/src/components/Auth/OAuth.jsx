@@ -5,31 +5,40 @@ import app from '../../Firebase/firebase';
 import { useMutation } from '@apollo/client';
 import {useNavigate} from 'react-router-dom'
 
+
 export default function OAuth() {
   const [SignupUser] = useMutation(OAuth_Type);
   const navigate = useNavigate();
 
   async function  HandleOAuth() {
+    
     try {
       const provider = new GoogleAuthProvider();
       const auth = getAuth(app);
 
       const result = await signInWithPopup(auth,provider);
       
-    
 
       let {data} =  await SignupUser({variables:{name:result.user.displayName,email:result.user.email,profile:result.user.photoURL}});
 
       if(data){
-        navigate(`/createpassword/${data.SignupUser.email}`)
+        if(data.SignupUser.msg === "Already Login success"){
+          // navigate("/");
+          navigate(`/createpassword/${data.SignupUser.user._id}`)
+        } 
+        else{
+          navigate(`/createpassword/${data.SignupUser.user._id}`)
+        }
       }
     } catch (error) {
       console.log(error);
+     
+      alert(error.message);
     }
   }
   return (
     <div>
-      <button onClick={HandleOAuth}>
+    <button onClick={HandleOAuth}>
     <FaGoogle style={{ marginRight: "8px" }} className=' w-6 h-6 hover:text-red-800'/>
   </button>
   </div>

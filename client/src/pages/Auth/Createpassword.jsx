@@ -9,17 +9,24 @@ export default function Createpassword() {
   const {emailId} = useParams();
   const [Inputvalue,setInputValue] = useState("")
   const navigate = useNavigate();
+  const [loading,setLoading] = useState();
+  const [error,setError] = useState();
 
   async function handlecreatepassword(e){
+    setLoading(true);
     e.preventDefault();
     try {
        let {data} =await createpassword({variables:{email:emailId,password:Inputvalue}});
 
        if(data){
+        setLoading(false);
         navigate('/')
        }
+
     } catch (error) {
+      setLoading(false);
       console.log(error);
+      setError(error.message);
     }
   }
   return (
@@ -64,6 +71,11 @@ export default function Createpassword() {
                         </div>
                       </form>
                     </div>
+               </div>
+
+                {/* error */}
+                <div className='h-6'>
+                 <p className='py-1 text-center text-red-500 font-semibold text-sm'>{error}</p>
                </div>
             </div>
 

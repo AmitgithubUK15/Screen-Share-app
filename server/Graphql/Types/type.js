@@ -1,6 +1,7 @@
 const typeDefs = `#graphql 
 
    type User{
+   _id:String
    name:String!
    email:String!
    password:String!
@@ -9,7 +10,7 @@ const typeDefs = `#graphql
    
    type response{
    msg:String
-   email:String
+   user:User
    }
 
    type Query{
