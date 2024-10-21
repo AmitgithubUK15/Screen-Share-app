@@ -10,11 +10,14 @@ const initialState = {
     reducers:{
         loginsuccess:(state,action)=>{
         state.S_ID = action.payload;
+        },
+        logout:(state)=>{
+            state.S_ID = null;
         }
     }
 });
 
-export const {loginsuccess} = Userslice.actions;
+export const {loginsuccess,logout} = Userslice.actions;
 export default Userslice.reducer;
 
 

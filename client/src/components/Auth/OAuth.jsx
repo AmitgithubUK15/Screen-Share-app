@@ -27,12 +27,12 @@ export default function OAuth() {
 
       if(data){
         if(data.SignupUser.msg === "Already Login success"){
-          dispatch(loginsuccess(data.loginUser.user._id))
+          dispatch(loginsuccess(data.SignupUser.user._id))
           dispatch(listenerror(""));
           navigate(`/`)
         } 
         else{
-          dispatch(loginsuccess(data.loginUser.user._id))
+          dispatch(loginsuccess(data.SignupUser.user._id))
           dispatch(listenerror(""));
           navigate(`/createpassword/${data.SignupUser.user._id}`)
         }

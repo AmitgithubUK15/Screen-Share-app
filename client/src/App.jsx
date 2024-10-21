@@ -2,14 +2,20 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import Login from './pages/Auth/Login'
 import Home from './pages/Home'
 import Createpassword from './pages/Auth/Createpassword';
+import PrivateRoute from './components/Auth/PrivateRoute';
 
 function App() {
   return (
   <BrowserRouter>
    <Routes>
-    <Route path="/" element={<Home />} />
+    
     <Route path='/login' element={<Login />} />
-    <Route path='/createpassword/:emailId' element={<Createpassword />} />
+
+     <Route element={<PrivateRoute />}>
+     <Route path="/" element={<Home />} />
+     <Route path='/createpassword/:emailId' element={<Createpassword />} />
+     </Route>
+   
    </Routes>
   </BrowserRouter>
   )
