@@ -6,13 +6,14 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {useDispatch} from 'react-redux'
 import { loginsuccess } from '../../store/User/UserSlice';
+import { listenerror } from '../../store/ErrorHandle/ErrorSlice';
+import ErrorHandler from '../../components/Error/ErrorHandler';
 
 
 export default function Login() {
   const [loginUser] = useMutation(Login_Type);
   const [emailval,setEmailval] = useState("");
   const [passval,setPassVal] = useState("");
-  const [error,setError] = useState();
   const navigate = useNavigate();
   const [logining,setLogining] = useState(false);
   const dispatch = useDispatch()
@@ -27,11 +28,12 @@ export default function Login() {
         dispatch(loginsuccess(data.loginUser.user._id))
         alert(data.loginUser.msg);
         setLogining(false);
+        dispatch(listenerror(""));
         navigate('/');
       }
     } catch (error) {
       setLogining(false);
-      setError(error.message);
+      dispatch(listenerror(error.message))
     }
   }
 
@@ -39,7 +41,7 @@ export default function Login() {
     <div className='w-full h-full'>
        <div className='w-full h-full  flex justify-center items-center'>
 
-          <div className='w-72 border shadow-md rounded-md'>
+          <div className='w-72 border shadow-lg rounded-md'>
             
             <div className='py-5 px-3 flex flex-col gap-4'>
               {/* loging header */}
@@ -83,7 +85,7 @@ export default function Login() {
                
                {/* error */}
                <div className='h-6'>
-                 <p className='py-1 text-center text-red-500 font-semibold text-sm'>{error}</p>
+                 <ErrorHandler />
                </div>
                
                {/* login with google and facebook */}

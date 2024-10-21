@@ -6,7 +6,7 @@ const { RestrictLoggedUser } = require("../../../../Middleware/CheckAuth");
 const { InternalServerError, UnauthorizedError, NotFoundError } = require("../../../../error/error");
 
 
-
+// Google Auth
 async function createuser(parent, args, { req, res }) {
   try {
 
@@ -66,6 +66,7 @@ async function createuser(parent, args, { req, res }) {
 }
 
 
+// Google Auth after password create option
 async function resolve_createpassword(parent, args, { req, res }) {
   try {
     let auth = await RestrictLoggedUser({ req, res });
@@ -94,6 +95,9 @@ async function resolve_createpassword(parent, args, { req, res }) {
 
 }
 
+
+
+// Login with email and password
 async function resolve_login(_, args, { req, res }) {
   try {
     let finduser = await User.findOne({ email: args.email });

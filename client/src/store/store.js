@@ -3,16 +3,17 @@ import {persistStore,persistReducer} from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
 
 import Userslice from './User/UserSlice'
+import errorSlice from './ErrorHandle/ErrorSlice'
 
 const rootreducer = combineReducers({
-  user:Userslice
+  user:Userslice,
+  error:errorSlice
 })
 
 const persistConfig = {
     key : 'root',
     storage,
-    blacklist:[],
-
+    blacklist:['error'],
 }
 
 const persisterReducer = persistReducer(persistConfig,rootreducer);

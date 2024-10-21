@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { CreatePassword_Type } from '../../Graphql/Mutation/Auth/Auth.mutation';
 import { useMutation } from '@apollo/client';
+import ErrorHandler from '../../components/Error/ErrorHandler';
+import { useDispatch } from 'react-redux';
+import { listenerror } from '../../store/ErrorHandle/ErrorSlice';
 
 
 export default function Createpassword() {
@@ -10,7 +13,7 @@ export default function Createpassword() {
   const [Inputvalue,setInputValue] = useState("")
   const navigate = useNavigate();
   const [loading,setLoading] = useState();
-  const [error,setError] = useState();
+  const dispatch = useDispatch();
 
   async function handlecreatepassword(e){
     setLoading(true);
@@ -20,20 +23,20 @@ export default function Createpassword() {
 
        if(data){
         setLoading(false);
+        dispatch(listenerror(""));
         navigate('/')
        }
 
     } catch (error) {
       setLoading(false);
-      console.log(error);
-      setError(error.message);
+      dispatch(listenerror(error.message));
     }
   }
   return (
     <div className='w-full h-full'>
        <div className='w-full h-full  flex justify-center items-center'>
 
-          <div className='w-72 border shadow-md rounded-md'>
+          <div className='w-72 border shadow-lg rounded-md'>
             
             <div className='py-5 px-3 flex flex-col gap-6'>
               {/* loging header */}
@@ -75,7 +78,7 @@ export default function Createpassword() {
 
                 {/* error */}
                 <div className='h-6'>
-                 <p className='py-1 text-center text-red-500 font-semibold text-sm'>{error}</p>
+                 <ErrorHandler />
                </div>
             </div>
 
