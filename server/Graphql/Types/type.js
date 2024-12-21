@@ -15,13 +15,14 @@ const typeDefs = `#graphql
 
    type Query{
    hello: response!
+   Alluser: [User]
    }
 
    type Mutation {
    SignupUser(name:String!, email:String!, profile:String!) : response
    createpassword(email:String!,password:String!) : response
    loginUser(email:String! , password:String!) : response
-   }
+   } 
 `;
 
 module.exports = typeDefs;

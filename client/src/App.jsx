@@ -3,6 +3,8 @@ import Login from './pages/Auth/Login'
 import Home from './pages/Home'
 import Createpassword from './pages/Auth/Createpassword';
 import PrivateRoute from './components/Auth/PrivateRoute';
+import Room from './pages/Room/Room';
+import CreateRoom from './pages/Room/CreateRoom';
 
 function App() {
   return (
@@ -14,6 +16,7 @@ function App() {
      <Route element={<PrivateRoute />}>
      <Route path="/" element={<Home />} />
      <Route path='/createpassword/:emailId' element={<Createpassword />} />
+     <Route path='/room' element={<CreateRoom/>} />
      </Route>
    
    </Routes>

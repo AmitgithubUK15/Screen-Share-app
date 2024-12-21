@@ -70,7 +70,8 @@ async function createuser(parent, args, { req, res }) {
 async function resolve_createpassword(parent, args, { req, res }) {
   try {
     let auth = await RestrictLoggedUser({ req, res });
-
+   
+    // let auth = true;
 
     if (auth === false) {
       throw new UnauthorizedError("Please login again");
