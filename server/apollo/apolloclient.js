@@ -6,15 +6,28 @@ const typeDefs = require("../Graphql/Types/type");
 const {Resolvers} = require("../Graphql/Resolvers/resolver")
 const cors = require('cors');
 const cookieparser = require("cookie-parser")
+const { ApolloServerPluginLandingPageProductionDefault, ApolloServerPluginLandingPageLocalDefault } = require("@apollo/server/plugin/landingPage/default");
 
 
 async function  Startserver() {
+    const isProduction = process.env.NODE_ENV === "production";
     const server = new ApolloServer({
         typeDefs:typeDefs,
         resolvers:Resolvers,
         context: async ({ req, res }) => {
             return { req, res };
           },
+          introspection: true, // Enable introspection explicitly
+          plugins: [
+            isProduction
+                ? ApolloServerPluginLandingPageProductionDefault({
+                      graphRef: "my-graph-id@current",
+                      embed: true,
+                  })
+                : ApolloServerPluginLandingPageLocalDefault({
+                      embed: true,
+                  }),
+        ],
           formatError:  (err) => {
             // console.error("costum err",err); // Log the error
             return {
